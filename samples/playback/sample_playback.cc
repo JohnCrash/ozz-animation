@@ -87,8 +87,17 @@ class LoadSampleApplication : public ozz::sample::Application {
     return true;
   }
 
+  void memfct(float f) {}
+
+  template<typename _T> void test(const _T& _t) {
+    _t(0.f);
+  }
+
   // Samples animation, transforms to model space and renders.
   virtual bool OnDisplay(ozz::sample::Renderer* _renderer) {
+
+    test(std::bind1st(std::mem_fun(&LoadSampleApplication::memfct), this));
+
     return _renderer->DrawPosture(skeleton_, models_,
                                   ozz::math::Float4x4::identity());
   }
